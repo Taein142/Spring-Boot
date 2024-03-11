@@ -1,0 +1,14 @@
+package com.icia.start.controller;
+
+import org.springframework.stereotype.Controller;
+
+import lombok.extern.slf4j.Slf4j;
+
+public class HomeController {
+
+	@Controller
+	@Slf4j
+	public class HomeController {
+
+	}
+}

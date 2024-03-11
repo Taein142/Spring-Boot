@@ -1,0 +1,38 @@
+package com.icia.thymeleafprj01.controller;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+public class HomeController {
+	@GetMapping("/")
+	public String home(Model model) {
+		log.info("home()");
+		
+		model.addAttribute("id","user");
+
+		return "index";
+	}
+	
+	@GetMapping("/second")
+	public String second(Model model) {
+		log.info("second()");
+		
+		Date now = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+		String date = sdf.format(now);
+		String date2 = "<h3>" + sdf.format(now) + "</h3>";
+		
+		model.addAttribute("date", date);
+		model.addAttribute("date2", date);
+		
+		return "second";
+	}
+}

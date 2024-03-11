@@ -1,0 +1,9 @@
+Thymeleaf Template
+	Spring Boot에서 view(HTML, Front-end)를 처리하는 기본 방식 중 하나.
+	파일의 확장자 : .html
+	jsp처럼 prefix, suffix를 설정할 필요 없음.
+	webapp/WEB-INF/views와 같은 폴더를 생성할 필요 없음.
+	Controller에서 처리하는 방식은 동일.
+	HTML 태그의 형식을 그대로 사용.
+	
+	

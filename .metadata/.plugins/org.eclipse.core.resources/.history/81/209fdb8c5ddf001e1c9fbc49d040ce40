@@ -1,0 +1,26 @@
+Spring Boot
+	SpringFramework를 사용하는 웹 애플리케이션과 마이크로 서비스를 더 빠르고 쉽게 개발하도록 돕는 도구
+
+핵심 기능
+	- 사전 설정된 종속성 항목으로 애플리케이션을 초기화
+	  내방형 자동 구성 기능과 설정에 따라 Spring Framework와
+	  3rd-party 패키지를 자동으로 구성.
+	- 개발자의 초기 선태겡 따라 설치할 패키지와 사용할 기본 값을 지정.
+	  개발자는 단순한 웹 폼인 Spring Boot Initializer로 프로젝트를 시작.
+	- Tomcat과 같은 웹 서버를 앱에 포함하여 외부 웹 서버에 의존하지 않고
+	  자체적으로 실행되는 독립형 애플리케이션을 개발할 수 있음.
+	  
+JSP를 위한 설정
+	1. 추가 Dependency
+		- tomcat-embed-jasper
+		- jstl
+	
+	2. view 폴더 생성
+		- scr > main > webapp > WEB-INF > views
+	
+	3. application.properties(view resolver 설정)
+		- spring.mvc.view.prefix=/WEB-INF/views/
+		- spring.mvc.view.suffix=.jsp
+	
+	※ pom.xml 등 xml에서 뜨는 오류가 아닌 오류 처리
+		Preferences > Maven > Download Artifact JavaDoc 체크

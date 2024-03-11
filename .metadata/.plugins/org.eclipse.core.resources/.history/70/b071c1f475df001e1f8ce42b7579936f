@@ -1,0 +1,70 @@
+Thymeleaf Template
+	Spring Boot에서 view(HTML, Front-end)를 처리하는 기본 방식 중 하나.
+	파일의 확장자 : .html
+	jsp처럼 prefix, suffix를 설정할 필요 없음.
+	webapp/WEB-INF/views와 같은 폴더를 생성할 필요 없음.
+	Controller에서 처리하는 방식은 동일.
+	HTML 태그의 형식을 그대로 사용.
+	
+Thymeleaf 문법
+	- resources/templates 폴더에 html 문서로 생성
+	- html 문서의 <html> 태그에 <html lang="ko" xmlns:th="http://www.thymeleaf.org"> 작성.
+	
+	1) 페이지 이동 url 처리
+		th:href, th:action 속성
+		url 표기법 : @{url}
+		예) <a th:href="@{second}">이동</a>
+		    <form th:action="@{proc}">
+		자바스크립트에서는 그냥 location.href를 사용.
+		
+	2) 문자열(문자열, 숫자)데이터 출력 속성
+		th:text - innerText와 같은 속성.
+		th:utext - innerHTML과 같은 속성.
+		[[...]] - 내용(content)에 직접 출력.(innerText)
+		[(...)] - 내용(content)에 직접 출력.(innerHTML)
+		
+		내용 출력을 위한 형식 : ${data}
+		예)
+    		<p>${data}</p> -> jsp 방식
+    		<p>문자열 : ${data}</p> => 문자열 : 전송내용
+    		thymeleaf의 방식
+    		<p th:text="'전송값 : ' + ${data}"></p>    -> innerText
+    		<p>전송값 : [[${data}]]</p>                -> innerText
+    		<p th:utext="'전송값 : ' + ${data}"></p>   -> innerHTML
+    		<p>전송값 : [(${data})]</p>                -> innerHTMl
+    		
+    		controller에서 보내는 데이터 Map(HashMap)
+    controller >
+        mapData.put("data1", "value1");
+        mapData.put("data2", "value2");
+        model.addAttribute("MapName", mapData);
+    thymeleaf>
+        방법 1)
+        th:text="${MapName.data1}" -> value1 출력
+        방법 2)
+        상위요소(부모요소)에 th:object="${MapName}"
+        하위요소(자식요소)에서 th:text="*{data1}"
+
+    controller에서 보내는 데이터(Thymeleaf Dto 출력)
+        model.addAttribute("식별자", dto);
+        -> th:text="${식별자.멤버변수}"
+        -> th:text="${식별자['멤버변수']}"
+        -> th:text="${식별자.getter()}"
+
+        상위요소에서 th:object="${식별자}"
+        -> 하위요소 th:text="*{멤버변수}"
+
+3) Thymeleaf에서 자바스크립트 처리하기
+    <script th:inline="javascript">
+        ... 자바스크립트 코드
+    </script>
+    th:inline을 작성하지 않을 경우 자바스크립트 내에서
+    thymeleaf가 정상적으로 동작하지 않는다.
+
+    자바스크립트에서 데이터 받기.
+    let v = [[${data}]];
+
+    data가 없을 경우 v에는 null이 저장됨.
+    이 후 조건식에서 null인지를 비교하는 형태로 처리.
+    		
+		

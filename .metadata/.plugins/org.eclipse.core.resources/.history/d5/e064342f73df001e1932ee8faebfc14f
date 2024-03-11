@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>세번째 페이지</h1>
+	<h2>Dto 받기</h2>
+	<p th:text="'제품명 : '+${prod1.pname"></p>
+	<p th:text="'제조사 : '+${prod1['brand']}"></p>
+	<p th:text="'가격 : '+${prod1.getPrice()}"></p>
+	<p th:text="'수량 : '+${prod1.amount}"></p>
+	
+	<hr>
+	
+	<table border="1" style="width:200">
+		<tr th:object="${prod2}">
+			<td th:text="*{pname}"></td>
+			<td th:text="*{brand}"></td>
+			<td th:text="*{price}"></td>
+			<td th:text="*{amount}"></td>
+	</table>
+</body>
+<script type="text/javascript">
+	let m = [[${msg}]]
+
+</script>
+</html>

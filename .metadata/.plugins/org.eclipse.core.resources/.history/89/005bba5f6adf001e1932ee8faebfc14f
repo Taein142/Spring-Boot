@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Thymeleaf page</h1>
+	<h3>안농</h3>
+	<p>${id}</p>
+	<p th:text="${id}">입니다.</p>
+	
+	<a href="second">[두번째]</a>
+	<a th:href="@{second}">second로 이동</a>
+</body>
+</html>

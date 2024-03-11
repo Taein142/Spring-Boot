@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h2>Second 페이지</h2>
+	<p th:></p>
+</body>
+</html>

@@ -1,0 +1,13 @@
+content_assist_autoactivation_triggers_java=.qwertyuiopasdfghjklzxcvbnm
+content_assist_disable_completion_trigger_chars=true
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="java.text.DateFormat"><rhs name\="java.text.SimpleDateFormat"/></lhs><lhs name\="java.text.Format"><rhs name\="java.text.SimpleDateFormat"/></lhs><lhs name\="java.lang.Cloneable"><rhs name\="java.text.SimpleDateFormat"/></lhs><lhs name\="java.text.SimpleDateFormat"><rhs name\="java.text.SimpleDateFormat"/></lhs><lhs name\="java.util.Map"><rhs name\="java.util.HashMap"/></lhs><lhs name\="org.springframework.web.servlet.ModelAndView"><rhs name\="org.springframework.web.servlet.ModelAndView"/></lhs><lhs name\="com.icia.thymeleafprj01.dto.ProductDTO"><rhs name\="com.icia.thymeleafprj01.dto.ProductDTO"/></lhs></history>
+content_assist_number_of_computers=15
+content_assist_proposals_background=255,255,255
+content_assist_proposals_foreground=0,0,0
+eclipse.preferences.version=1
+org.eclipse.jdt.ui.formatterprofiles.version=23
+sourceHoverBackgroundColor=255,255,225
+spelling_locale_initialized=true
+typefilter_migrated_2=true
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true

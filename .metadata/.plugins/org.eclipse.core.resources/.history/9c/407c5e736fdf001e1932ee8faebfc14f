@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h2>Second 페이지</h2>
+	<p th:text="${date}"></p>
+	<p th:text="${date2}"></p>
+	<p th:utext="${date2}"></p>
+	<p>[[${date2}]]</p>
+	<p th:text="'오늘 날짜 : ' + ${date}"></p>
+	<p>오늘 날짜 : [[${date2}]]</p>
+	<p th:utext="'오늘 날짜 : ' + ${date2}"></p>
+	<p>오늘 날짜 : [(${date2})]</p>
+	
+	<ul>
+		<li th:text="'제품명 : ' + ${product.pname}"></li>
+		<li th:text="'제조사 : ' + ${product.brand}"></li>
+		<li th:text="'가격 : ' + ${product.price}"></li>
+	</ul>
+	<h5>---------------</h5>
+</body>
+</html>
