@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DATA-SCI board</title>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script th:inline="javascript">
+        $(function () {
+            let m = [[${msg}]];
+            if(m != null){
+                alert(m);
+            }
+            
+            $("#pchange").click(function(){
+            	location.href="authUser";
+            });
+        });
+    </script>
+</head>
+<body>
+<header>
+    <th:block th:insert="~{fragments::header(${session.member})}" />
+</header>
+<section>
+    <div class="content">
+        <form th:action="@{loginProc}" method="post"
+              class="login-form">
+            <h2 class="login-header">로그인</h2>
+            <input type="text" class="login-input" name="m_id"
+                   autofocus required placeholder="아이디">
+            <input type="password" class="login-input"
+                   name="m_pwd" required placeholder="비밀번호">
+            <input type="submit" class="login-btn" value="로그인">
+            <button type="button" class="idcheck-btn" id="pchange">비밀번호찾기</button>
+        </form>        
+    </div>
+</section>
+<footer>
+    <th:block th:insert="~{fragments::footer}" />
+</footer>
+</body>
+</html>

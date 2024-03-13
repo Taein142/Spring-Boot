@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Third</title>
+</head>
+<body>
+<header th:insert="~{fragments::header('제어','')}"></header>
+<section>
+	<h2>th:if, th:unless</h2>
+	<th:block th:if="${not #strings.isEmpty(mid)}">
+		<p th:text="${mid}+'님 반갑습니다.'"></p>
+	</th:block>
+	<th:block th:unless="${not #strings.isEmpty(mid)}">
+		<p>안녕하세요.</p>
+	</th:block>
+	<hr>
+	<h2>Elvis Operator</h2>
+	<p th:text="${mid?:'Guest'}"></p>
+	<hr>
+	<h2>switch, case</h2>
+	<th:block th:switch="${age/10}">
+		<p th:case="2">당신은 20대 입니다.</p>
+		<p th:case="3">당신은 30대 입니다.</p>
+		<p th:case="4">당신은 40대 입니다.</p>
+	</th:block>
+	<hr>
+	<h2>th:each</h2>
+	<h3>카페 메뉴판</h3>
+	<table border="1">
+		<tr>
+			<th>번호</th>
+			<th>메뉴명</th>
+		</tr>
+		<th:block th:if="${#lists.isEmpty(menus)}">
+			<tr>
+				<td colspan="2">출력할 메뉴가 없습니다.</td>
+			</tr>
+		</th:block>
+		<th:block th:unless="${#lists.isEmpty(menus)}">
+			<th:block th:each="item,status:${menus}">
+				<th:block th:if="${status.first}">
+					<tr style="color:red;">
+						<td th:text="${status.count}"></td>
+						<td th:text="${item}"></td>
+					</tr>
+				</th:block>
+				<th:block th:unless="${status.first}">
+					<tr>
+						<td th:text="${status.count}"></td>
+						<td th:text="${item}"></td>
+					</tr>
+				</th:block>
+			</th:block>
+		</th:block>
+	</table>
+</section>
+<footer th:replace="~{fragments::footer}"></footer>
+</body>
+</html>
+
+

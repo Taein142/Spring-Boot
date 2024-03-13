@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>DATA-SCI board</title>
+<script src="js/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+<script th:inline="javascript">
+	$(function(){
+		// bxSlider 설정
+		$(".slider").bxSlider({
+			auto:true, // 자동순환
+			slideWidth: 600 // 슬라이더 가로 길이
+		});
+	})
+</script>
+</head>
+<body>
+<header>
+	<th:block th:insert="~{fragments::header(${session.member})}" />
+</header>
+<section>
+	<div class="content-home">
+		<div class="slider">
+			<div><img src="images/chrysanthemum.jpg"></div>
+			<div><img src="images/Desert.jpg"></div>
+			<div><img src="images/Lighthouse.jpg"></div>
+			<div><img src="images/Tulips.jpg"></div>
+		</div>
+	</div>
+</section>
+<footer>
+	<th:block th:insert="~{fragments::footer}" />
+</footer>
+</body>
+</html>

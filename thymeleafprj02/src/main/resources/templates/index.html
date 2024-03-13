@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>HOME</title>
+<link rel="stylesheet" th:href="@{css/style.css}">
+<style type="text/css">
+	.header {
+		background-color: black;
+		color: white;
+	}
+	.header h2 {
+		color: white;
+	}
+</style>
+</head>
+<body>
+<header th:insert="~{fragments::header('index', '')}"></header>
+<section>
+	<h2>첫 페이지</h2>
+	<p>Spring Boot Project start~~</p>
+	<a th:href="@{second(data1='한글데이터',data2=100)}">[전송과 이동]</a>
+	<div th:insert="~{now.html}"></div>
+	<hr>
+	<a th:href="@{third}">[이동]</a>
+</section>
+<footer th:replace="~{fragments::footer}"></footer>
+</body>
+</html>

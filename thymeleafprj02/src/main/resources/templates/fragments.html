@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="header(data1, data2)" class="header">
+	<img alt="로고" th:src="@{images/mlogo.png}" class="logo">
+	<a th:href="@{/}"><h2>Home - [[${data1}]] [[${data2}]]</h2></a>
+	<hr>
+</div>
+
+<div th:fragment="footer">
+	<hr>
+	<p>footer</p>
+</div>
+</body>
+</html>

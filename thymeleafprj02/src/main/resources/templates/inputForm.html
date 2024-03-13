@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<header th:insert="~{fragments::header('입력양식','')}"></header>
+<section>
+<h2>제품정보 입력 양식</h2>
+<form th:action="@{datain}">
+	<input type="text" name="pname" placeholder="제품명"><br>
+	<input type="text" name="brand" placeholder="제조사"><br>
+	<input type="number" name="price" placeholder="가격"><br>
+	<input type="number" name="amount" placeholder="수량"><br>
+	<input type="submit" value="저장">
+</form>
+</section>
+<footer th:replace="~{fragments::footer}"></footer>
+</body>
+</html>

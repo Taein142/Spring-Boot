@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<!-- header -->
+<div th:fragment="header(member)" class="top-bar">
+	<div class="content">
+		<img src="images/r-logo.jpg" alt="로고" class="top-left logo" onclick="gohome()">
+		<h2 class="top-left top-home">Data-SCI Board</h2>
+		<nav class="top-right">
+			<ul>
+				<th:block th:if="${member == null}">
+					<li><a th:href="@{loginForm}">Login</a></li>
+					<li><a th:href="@{joinForm}">Join</a></li>
+				</th:block>
+				<th:block th:unless="${member == null}">
+					<li th:text="${member.m_id}+'님'"></li>
+					<li><a th:href="@{logout}">Logout</a></li>
+				</th:block>
+			</ul>
+		</nav>
+	</div>
+	<script th:inline="javascript">
+		const mem = [[${session.member}]];
+		
+		const gohome = () => {
+			if(mem != null){
+				location.href ="/boardList?pageNum=1"
+			}else{
+				location.href ="/";
+			}
+		}
+	
+	</script>
+</div>
+<!-- footer -->
+<div th:fragment="footer" class="footer-bar">
+	<div class="content">
+		<div class="fcontents">
+			<img src="images/r-logo-v.png" class="footer-logo">
+			<span class="footer-txt">&copy;Data Scientist 2024</span>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
