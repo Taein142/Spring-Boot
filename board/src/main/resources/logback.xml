@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</Pattern>
+		</encoder>
+	</appender>
+	<logger name="com.icia.board" level="info" />
+	<!-- 테이블에 결과를 출력하기 위해서 info 대신 trace설정 -->
+	<logger name="jdbc.connection" level="off" />
+	<logger name="jdbc.sqlonly" level="info" />
+	<logger name="jdbc.sqltiming" level="off" />
+	<logger name="jdbc.audit" level="off" />
+	<logger name="jdbc.resultsettable" level="info" />
+	<logger name="jdbc.resultset" level="info" />
+	<root level="info">
+		<appender-ref ref="console" />
+	</root>
+</configuration>

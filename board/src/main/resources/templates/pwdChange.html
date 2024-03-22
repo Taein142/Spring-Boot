@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>비밀번호 변경</title>
+	<script src="js/jquery-3.7.1.min.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<header>
+		<th:block th:insert="~{fragments::header(${session.member})}" />
+	</header>
+	<section>
+		<div class="content">
+	        <form class="login-form" th:action="@{pwdChangeProc}" method="post">
+	            <h2 class="login-header">비밀번호 변경</h2>
+	            <input type="password" class="login-input" name="m_pwd" 
+	            	   placeholder="비밀번호">
+	            <button type="submit" class="login-btn" id="sbtn">변경</button>
+	        </form>
+    	</div>
+	</section>
+	<footer>
+		<th:block th:insert="~{fragments::footer}" />
+	</footer>
+</body>
+</html>

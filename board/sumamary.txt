@@ -1,10 +1,118 @@
 패키지 구성
-- 컨트롤러
-- 서비스
-- dao
+- controller
+- service
 - dto
+- dao
 - config
 - util
 
 DTO 작성하기
-	DB 테이블(또는 view)의 칼럼과 같은 변수로 구성.
+  DB 테이블(또는 view)의 컬럼과 같은 변수로 구성. 
+  
+
+  
+Id 중복 체크 처리
+  비동기 통신 방식으로 처리 - jQuery의 ajax
+  	Ajax(Asynchronous JavaScript And XML)
+  
+  동기(Synchronous) 통신 방식 - get, post
+  		페이지가 변경되는 방식
+  비동기(Asynchronous) 통신 방식(RESTful)
+		페이지가 변경되지 않는 방식(한 문서의 일부분이 변경되는 형태)
+
+	Ajax를 사용할 경우 Controller의 처리가 필요.
+	
+	1) 일반 controller의 메소드에 ResponseBody 어노테이션 활용.
+	   DispatcherServlet으로 응답을 보내는 것이 아니라 client의
+	   body 부분에 직접 데이터를 전송.
+	2) RestController 어노테이션 활용. 메소드에 ResponseBody
+	   어노테이션을 사용하지 않는다.
+	   
+	   
+참고. Thread(쓰레드)
+	프로그램(Program) - 실행 가능한 코드의 묶음이 (보조기억장치에) 저장되어 있는 상태.
+	프로세스(Process) - 프로그램이 메모리 상에서 동작(실행) 중인 상태.
+		프로세스 = 쓰레드의 묶음.
+			Thread는 명령어 묶음.(프로그램의 작업 단위)
+
+log level
+1. debug - 개발용
+2. info - 정보 확인용
+3. warning - 실행 가능한 에러 확인용
+4. error - 실행 불가능한 에러 확인용 
+5. fatal - 시스템에 치명적인 에러 확인용
+6. all
+7. off
+
+DB Log 처리
+    일반적인 로그 관련 라이브러리(lombok)에서는
+    DB 관련 로그를 출력할 수 없음.
+    (MyBatis 내부에서 처리되기 때문에...)
+    Log4jdbc 라이브러리를 활용하여 처리.
+
+    build.gradle에 dependency 추가
+    > log4jdbc-log4j2 (mvnrepository.com에서 검색)
+    선택 항목 : Log4Jdbc Log4j2 JDBC 4 1
+
+    추가 파일 : resources 폴더에 추가
+    - log4jdbc.log4j2.properties : 라이브러리 설정
+    - logback.xml : 로그출력 관련 설정
+
+    application.properties 파일에 설정 변경
+    - ...driver-class-name
+    - ...url
+
+logback.xml의 로그 설정
+	패키지 로그 : 지정된 패키지 하위 클래스에서 출력하는 로그 설정.
+		예) com.icia.board 
+	connection 로그 : connection 수립과 관련된 로그 출력 설정.
+	sqlonly 로그 : 실행한 SQL 문장만 출력하도록 설정.
+	sqltiming 로그 : SQL 문장과 실행된 시간을 출력.
+	audit 로그 : ResultSet을 제외한 JDBC 호출 정보를 출력.
+	resultset 로그 : ResultSet을 포함한 JDBC 호출 정보를 출력.
+	resultsettable 로그 : SQL 조회 결과를 테이블 형식으로 출력.
+	root level 로그 : 선택한 log 이외의 정보들에 대해서 설정.
+		프로젝트 실행 시 최초에 한번씩 실행되는 부분에 대한 로그.
+		프로그램 이전 서버 관련 내용을 출력.
+		debug 설정 시 로그 양이 많기 때문에, info 또는 off.
+
+level error : debug, info, warn으로 작성한 로그는 출력되지 않음.
+level debug : debug, info, warn, error, fatal까지 출력
+level info : debug만 출력되지 않음.
+level warn : debug, info는 출력되지 않음.
+
+개발 중에는 level을 debug나 info로, 운영 시에는 warn이나 error로 설정.
+
+@Slf4j : 5단계로 구분하여 로그를 출력하는 기능 제공 lombok 객체
+	- debug, info, warn, error, trace(all) 메소드 제공
+	예) log.debug("메시지");
+	   log.trace("메시지");
+
+비밀번호 암호화 - SpringSecurity Core 라이브러리의 PasswordEncoder를 활용
+	비밀번호 암호화 후에는 Stirng.equals 메소드로 비교가 불가능해 짐.
+	PasswordEncoder는 두가지 메소드를 제공.
+	1) 암호화 메소드
+		평문(plane text) -> 암호문(cipher text) 변환 기능만 제공(암호화)
+		복호화는 제공하지 않음.
+	2) 비교 메소드
+		a~z + 5 : a -> e, b -> f
+		암호문 작성 알고리즘을 적용하여 평문과 암호문을 비교.
+		
+	비밀번호 찾기 기능을 제공할 수 없다! -> 인증 후 비밀번호를 변경.
+	
+메일 인증 기능 규현하기
+	메일 인증을 위한 메일 서버는 실제 서버를 활용한다.
+	- google, naver, daum 등
+	
+	서버용 메일 - 네이버
+	회원 메일 - 구글, 다음
+	
+	보내는(서버용) 메일 및 회원확인용 메일은 실제 메일을 사용.
+	
+	핸드폰 인증은 어렵다(왜? 돈이 들어간다..)
+
+MIME(Multipurpose Internet Mail Extensions)
+	초기 메일은 문자만 주고 받았으나, 
+	인터넷 기술의 발전으로 다양한 형태의 데이터를 전송할 수 있게 변경되었다.
+	이미지, 음성 파일, 동영상 파일 등을 담아서 전송이 가능하게 확장된 표준.
+	HTML에까지 확장되어 현재 사용 중.

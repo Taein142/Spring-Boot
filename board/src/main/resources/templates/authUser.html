@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>사용자 인증</title>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script th:inline="javascript">
+        $(function(){
+            // 받은 코드를 입력하고 전송하는 부분 숨기기
+            $(".tbmg").hide();
+            
+            $("#sbtn").click(function(){
+                let mid = $("#m_id").val();
+                let email = $("#m_mail").val();
+                if(mid == "" || email == ""){
+                    alert("정보를 입력하세요.");
+                    return;
+                };
+                
+                let mObj = {"m_id": mid, "m_email": email};
+                console.log(mObj);
+                
+                $.ajax({
+                    url: "mailConfirm",
+                    type: "post",
+                    data: mObj,
+                    success: (res) => {
+                        if(res == "ok"){
+                            alert("인증코드를 메일로 전송했습니다.");
+                            $(".tbmg").show();
+                            $("#sbtn").attr("disabled", true)// 전송버튼 비활성화
+                        }
+                        else{
+                            alert("메일 전송에 실패했습니다.");
+                        }
+                    },
+                    error: (err) => {
+                        console.log(err);
+                        alert("실패했습니다.");
+                    }
+                })
+            });
+            // 인증코드 전송 및 확인
+            $("#cbtn").click(function(){
+            	let vcode = $("#v_code").val();
+            	if(vcode == ""){
+            		alert("인증코드를 입력하세요.")
+            		return;
+            	}
+            	let cobj = {"v_code": vcode};
+            	
+            	$.ajax({
+            		url: "codeAuth",
+            		type: "post",
+            		data: cobj,
+            		success: (res) => {
+            			if(res =="ok"){
+            				console.log("ok?");
+            				location.href="/pwdChange";
+            			}else{
+            				alert("코드가 맞지 않습니다.")
+            				location.reload(); //페이지 새로 고침
+            			}            			
+            		},
+            		error: (err) => {
+            			console.log(err);
+            			alert("코드 인증 실패");
+            		}
+            	});
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <th:block th:insert="~{fragments::header(${session.member})}" />
+    </header>
+    <section>
+        <div class="content">
+            <div class="login-form">
+                <h2 class="login-header">메일 인증</h2>
+                <input type="text" class="login-input" id="m_id"
+                       autofocus placeholder="아이디">
+                <input type="email" class="login-input" id="m_mail" 
+                       placeholder="이메일">
+                <button type="button" class="login-btn" id="sbtn">인증코드전송</button>
+                <input type="text" class="login-input tbmg" id="v_code"
+                       placeholder="전송받은 인증코드">
+                <button type="button" class="login-btn tbmg" id="cbtn">코드인증</button>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <th:block th:insert="~{fragments::footer}" />
+    </footer>
+</body>
+</html>
