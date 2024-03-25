@@ -5,21 +5,21 @@
 	<select id="selectPassword" parameterType="String" resultType="String">
 		SELECT m_pwd FROM member WHERE m_id = #{mid}
 	</select>
-	<select id="selectMember" parameterType="String" resultType="MemberDTO">
+	<select id="selectMember" parameterType="String" resultType="MemberDto">
 		SELECT * FROM minfo WHERE m_id=#{mid}
 	</select>
 	<select id="selectId" parameterType="String" resultType="Integer">
 		SELECT count(*) FROM member WHERE m_id=#{mid}
 	</select>
 	
-	<insert id="insertMember" parameterType="MemberDTO">
+	<insert id="insertMember" parameterType="MemberDto">
 		INSERT INTO MEMBER VALUES 
 		(#{m_id}, #{m_pwd}, #{m_name}, #{m_email}, #{m_birth}, #{m_addr}, #{m_phone}, DEFAULT)
 	</insert>
 	<select id="selectEmail" parameterType="String" resultType="String">
 		SELECT m_email FROM member WHERE m_id=#{m_id}
 	</select>
-	<update id="updatePassword" parameterType="MemberDTO">
+	<update id="updatePassword" parameterType="MemberDto">
 		UPDATE member SET m_pwd=#{m_pwd} WHERE m_id = #{m_id}
 	</update>
 </mapper>

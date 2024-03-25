@@ -2,33 +2,69 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>보드리스트</title>
+<title>DATA-SCI Board</title>
 <script src="js/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="css/style.css">
-<script>
-	window.onload = function() {
-		// 현재 URL을 가져옴
-		var currentUrl = window.location.href;
-
-		// pageNum이 포함되어 있는지 확인
-		if (currentUrl.indexOf('pageNum') === -1) {
-			// pageNum이 없으면 URL에 pageNum=1을 추가
-			currentUrl += (currentUrl.indexOf('?') === -1 ? '?' : '&')
-					+ 'pageNum=1';
-			// 새로운 URL로 리다이렉트
-			window.location.href = currentUrl;
+<script th:inline="javascript">
+	$(function(){
+		let m = [[${msg}]];
+		if (m != null){
+			alert(m);
 		}
-	}
+	});
 </script>
 </head>
 <body>
 <header>
     <th:block th:insert="~{fragments::header(${session.member})}" />
 </header>
-<div class="content">
-<h1>공사중입니다.</h1>
-</div>
+<section>
+	<div class="content">
+		<div class="board-form">
+			<div class="user-info">
+				<div class="user-info-sub" th:object="${session.member}">
+					<p th:text="'등급 ['+*{g_name}+']'"></p>
+					<p th:text="'POINT ['+*{m_point}+']'"></p>
+				</div>
+			</div>
+			<h2 class="login-header">게시글 목록</h2>
+			<div class="search-area">
+				<select id="sel">
+					<option value="b_title" selected>제목</option>
+					<option value="b_contents" selected>내용</option>
+				</select>
+				<input type="text" id="keyword">
+				<button id="search">검색</button>
+			</div>
+			<div class="data-area">
+				<div class="title-row">
+					<div class="t-no p-10">번호</div>
+					<div class="t-title p-30">제목</div>
+					<div class="t-name p-15">작성자</div>
+					<div class="t-date p-30">작성일</div>
+					<div class="t-view p-15">조회수</div>
+				</div>
+				<div class="data-row">
+					<th:block th:if="${#lists.isEmpty(bList)}">
+						<div style="width: 100%">게시글이 없습니다.</div>
+					</th:block>
+					<th:block th:unless="${#lists.isEmpty(bList)}">
+						<th:block th:each="bitem:${bList}">
+							<div class="t-no p-10" th:text="${bitem.b_num}"></div>
+							<div class="t-title p-30" th:text="${bitem.b_title}"></div>
+							<div class="t-name p-15" th:text="${bitem.b_id}"></div>
+							<div class="t-date p-30" th:text="${bitem.b_date}"></div>
+							<div class="t-view p-15" th:text="${bitem.b_views}"></div>
+						</th:block>
+					</th:block>
+				</div>
+			</div>
+			<div class="btn-area">
+				
+			</div>
+		</div>
+	</div>
+</section>
 <footer>
     <th:block th:insert="~{fragments::footer}" />
 </footer>

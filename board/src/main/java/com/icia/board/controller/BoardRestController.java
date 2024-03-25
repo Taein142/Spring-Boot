@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.icia.board.dto.MemberDTO;
+import com.icia.board.dto.MemberDto;
 import com.icia.board.service.MailService;
 import com.icia.board.service.MemberService;
 
@@ -31,7 +31,7 @@ public class BoardRestController {
 	}
 	
 	@PostMapping("mailConfirm")
-	public String mailConfirm(MemberDTO memberDTO, HttpSession session) {
+	public String mailConfirm(MemberDto memberDTO, HttpSession session) {
 		log.info("mailConfirm()");
 		String res = mailServ.sendEmail(memberDTO, session);
 		return res;

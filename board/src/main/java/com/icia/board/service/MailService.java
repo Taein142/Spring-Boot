@@ -10,7 +10,7 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import com.icia.board.dao.MemberDao;
-import com.icia.board.dto.MemberDTO;
+import com.icia.board.dto.MemberDto;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -87,7 +87,7 @@ public class MailService {
 	}
 	
 	// 메일 전송 메소드
-	public String sendEmail(MemberDTO memberDTO, HttpSession session) {
+	public String sendEmail(MemberDto memberDTO, HttpSession session) {
 		log.info("sendEmail()");
 		
 		MimeMessage emailForm = null;

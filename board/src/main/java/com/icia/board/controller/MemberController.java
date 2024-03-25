@@ -2,13 +2,11 @@ package com.icia.board.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.icia.board.dto.MemberDTO;
+import com.icia.board.dto.MemberDto;
 import com.icia.board.service.MemberService;
 
 import jakarta.servlet.http.HttpSession;
@@ -35,7 +33,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("loginProc")
-	public String loginProc(MemberDTO member, HttpSession session, RedirectAttributes rttr) {
+	public String loginProc(MemberDto member, HttpSession session, RedirectAttributes rttr) {
 		log.info("loginProc()");
 		
 		return mServ.loginProc(member, session, rttr);
@@ -57,7 +55,7 @@ public class MemberController {
 //	}
 	
 	@PostMapping("joinProc")
-	public String joinProc(MemberDTO memberDTO, RedirectAttributes rttr) {
+	public String joinProc(MemberDto memberDTO, RedirectAttributes rttr) {
 		log.info("joinProc");
 		String view = mServ.memberJoin(memberDTO, rttr);
 		
@@ -78,17 +76,11 @@ public class MemberController {
 	}
 	
 	@PostMapping("pwdChangeProc")
-	public String pwdChangeProc(MemberDTO memberDTO, HttpSession session, RedirectAttributes rttr) {
+	public String pwdChangeProc(MemberDto memberDTO, HttpSession session, RedirectAttributes rttr) {
 		log.info("pwdChangeProc()");
 		
 		String view = mServ.pwdChangeProc(memberDTO, session, rttr);
 		
 		return view;
-	}
-	
-	@GetMapping("boardList")
-	public String showBoardList(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, HttpSession session, Model model) {
-		
-		return "boardList";
 	}
 }

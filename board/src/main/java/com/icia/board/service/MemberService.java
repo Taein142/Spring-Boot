@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.icia.board.dao.MemberDao;
-import com.icia.board.dto.MemberDTO;
+import com.icia.board.dto.MemberDto;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class MemberService {
 	private BCryptPasswordEncoder pEncoder = new BCryptPasswordEncoder();
 
 	// 로그인 처리 메소드
-	public String loginProc(MemberDTO member, HttpSession session, RedirectAttributes rttr) {
+	public String loginProc(MemberDto member, HttpSession session, RedirectAttributes rttr) {
 		log.info("loginProc()");
 
 		String view = null;
@@ -65,7 +65,7 @@ public class MemberService {
 		return result;
 	}
 
-	public String memberJoin(MemberDTO member, RedirectAttributes rttr) {
+	public String memberJoin(MemberDto member, RedirectAttributes rttr) {
 		log.info("memverJoin()");
 		String view = null;
 		String msg = null;
@@ -90,7 +90,7 @@ public class MemberService {
 		return view;
 	}
 
-	public String pwdChangeProc(MemberDTO memberDTO, HttpSession session, RedirectAttributes rttr) {
+	public String pwdChangeProc(MemberDto memberDTO, HttpSession session, RedirectAttributes rttr) {
 		log.info("pwdChangeProc()");
 		String view = null;
 		String msg = null;
