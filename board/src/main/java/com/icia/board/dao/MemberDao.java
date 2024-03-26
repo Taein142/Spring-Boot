@@ -1,7 +1,10 @@
 package com.icia.board.dao;
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
+import com.icia.board.dto.BoardFileDto;
 import com.icia.board.dto.MemberDto;
 
 @Mapper
@@ -22,5 +25,8 @@ public interface MemberDao {
 	String selectEmail(String m_id);
 	
 	// 비밀번호 변경 메소드
-	void updatePassword(MemberDto memberDTO);
+	void updatePassword(MemberDto memberDto);
+	
+	// 회원 포인트 수정 메소드
+	void updateMemberPoint(MemberDto member);
 }

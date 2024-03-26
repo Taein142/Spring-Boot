@@ -51,16 +51,19 @@
 					<th:block th:unless="${#lists.isEmpty(bList)}">
 						<th:block th:each="bitem:${bList}">
 							<div class="t-no p-10" th:text="${bitem.b_num}"></div>
-							<div class="t-title p-30" th:text="${bitem.b_title}"></div>
+							<div class="t-title p-30">
+								<a th:href="@{boardDetail(b_num=${bitem.b_num})}" th:text="${bitem.b_title}"></a>
+							</div>
 							<div class="t-name p-15" th:text="${bitem.b_id}"></div>
-							<div class="t-date p-30" th:text="${bitem.b_date}"></div>
+							<div class="t-date p-30" th:text="${#dates.format(bitem.b_date, 'yyyy-MM-dd HH:mm:ss')}"></div>
 							<div class="t-view p-15" th:text="${bitem.b_views}"></div>
 						</th:block>
 					</th:block>
 				</div>
 			</div>
 			<div class="btn-area">
-				
+				<div class="paging" th:utext="${paging}"></div>
+				<button class="wr-btn" id="write">글쓰기</button>
 			</div>
 		</div>
 	</div>
@@ -69,4 +72,22 @@
     <th:block th:insert="~{fragments::footer}" />
 </footer>
 </body>
+<script th:inline="javascript">
+$("#search").click(function(){
+    let keyword = $("#keyword").val();
+    if(keyword == ""){
+        alert("검색어를 입력하세요.");
+        return;
+    }
+
+    let select = $("#sel").val(); // 제목(b_title) or 내용(b_contents)
+    
+    location.href = "/boardList?colname="+select+"&keyword="+keyword+"&pageNum=1";
+});
+
+$("#write").click(function(){
+	location.href = "/writeForm";	
+});
+
+</script>
 </html>

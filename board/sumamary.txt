@@ -8,7 +8,6 @@
 
 DTO 작성하기
   DB 테이블(또는 view)의 컬럼과 같은 변수로 구성. 
-  
 
   
 Id 중복 체크 처리
@@ -117,4 +116,34 @@ MIME(Multipurpose Internet Mail Extensions)
 	이미지, 음성 파일, 동영상 파일 등을 담아서 전송이 가능하게 확장된 표준.
 	HTML에까지 확장되어 현재 사용 중.
 	
+Mybatis SelectKey
+	게시글이 저장되면 순차적으로 게시글의 첨부파일이 저장되는 상황에서
+	첨부파일 테이블에 들어가는 게시글의 번호가 언제 생성되는 지의 문제.
+	게시글 번호는 게시글 테이블에 데이터가 insert 될 때 생성됨.
+	
+	MYSQL의 경우 insert와 동시에 key가 생성됨.
+	Oracle의 경우 insert 전에 key가 생성됨.
+	
+Transaction(트랜잭션) 처리
+	CRUD 작업 중 Create, Update, Delete 작업은 트랜젝션 처리가 필요함.
+	트랜젝션: DB 작업 단위.
+	
+	COMMIT - 최종 승인
+	ROLLBACK - 되돌리기
 
+확장자: 파일을 구분하기 위한 식별 체계. (image.jpg)
+
+@JsonFormat
+	ajax(RESTful)로 날짜를 전송할 때 잘짜 형식을 지정할 수 있다.
+
+
+상세보기 화면
+댓글 처리
+	serialize() : 데이터 직렬화 함수.
+		form의 input 태그로 받는 데이터를 직렬화하여 전송할 수 있는 형태로 변환.
+
+게시글 수정/삭제
+
+접근 제어
+
+에러 페이지 처리

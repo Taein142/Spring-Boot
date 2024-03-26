@@ -3,10 +3,12 @@ package com.icia.board.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.icia.board.dao.MemberDao;
 import com.icia.board.dto.MemberDto;
+import com.icia.board.dto.ReplyDto;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -90,20 +92,20 @@ public class MemberService {
 		return view;
 	}
 
-	public String pwdChangeProc(MemberDto memberDTO, HttpSession session, RedirectAttributes rttr) {
+	public String pwdChangeProc(MemberDto memberDto, HttpSession session, RedirectAttributes rttr) {
 		log.info("pwdChangeProc()");
 		String view = null;
 		String msg = null;
 
 		String m_id = (String) session.getAttribute("m_id");
-		String encPwd = pEncoder.encode(memberDTO.getM_pwd());
+		String encPwd = pEncoder.encode(memberDto.getM_pwd());
 
 		if (m_id != null) {
-			memberDTO.setM_id(m_id);
-			memberDTO.setM_pwd(encPwd);
+			memberDto.setM_id(m_id);
+			memberDto.setM_pwd(encPwd);
 			
 			try {
-				mDao.updatePassword(memberDTO);
+				mDao.updatePassword(memberDto);
 				msg = "비밀번호 변경 성공";
 				view = "redirect:loginForm";
 			} catch (Exception e) {
@@ -116,5 +118,12 @@ public class MemberService {
 		rttr.addFlashAttribute("msg", msg);
 		
 		return view;
+	}
+
+	public String logout(HttpSession session, RedirectAttributes rttr) {
+		session.invalidate();
+		rttr.addFlashAttribute("msg", "로그아웃되었습니다.");
+		
+		return "redirect:/";
 	}
 }

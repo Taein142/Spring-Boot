@@ -29,7 +29,14 @@ public class PagingUtil {
 		
 		for(int i = start; i <= end; i++) {
 			if(i != pageNum) {
-				sb.append("<a class='pno' href='/" + listName + "pageNum=" + i + "'>" + i + "</a>");
+				// sb.append("<a class='pno' href='/" + listName + "pageNum=" + i + "'>" + i + "</a>");
+				sb.append("<a class='pno' href='/")
+				  .append(listName)
+				  .append("pageNum=")
+				  .append(i)
+				  .append("'>")
+				  .append(i)
+				  .append("</a>");
 			} else {
 				sb.append("<font class='pno'>" + i + "</font>");
 			}
