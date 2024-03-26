@@ -70,7 +70,5 @@ public class BoardController {
 		resp = bServ.fildDownload(bfile, session);
 
 		return resp;
-
 	}
-
 }
