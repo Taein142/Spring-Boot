@@ -16,3 +16,10 @@ public class BoardDto {
 	private Timestamp b_date;
 	private int b_views;
 }
+
+
+
+
+
+
+

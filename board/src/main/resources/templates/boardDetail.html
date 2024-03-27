@@ -41,7 +41,7 @@
                      th:text="${board.m_name}"></div>
                 <div class="t_content p-15">DATE</div>
                 <div class="d_content dp-30"
-                     th:text="${board.b_date}"></div>
+                     th:text="${#dates.format(board.b_date, 'yyyy-MM-dd HH:mm:ss')}"></div>
                 <div class="t_content p-15">VIEWS</div>
                 <div class="d_content dp-10"
                      th:text="${board.b_views}"></div>
@@ -64,7 +64,8 @@
                     </th:block>
                     <th:block th:unless="${#lists.isEmpty(bfList)}">
                     	<th:block th:each="fitem:${bfList}">
-                    		<a th:href="@{download(bf_sysname=${fitem.bf_sysname},bf_oriname=${fitem.bf_oriname})}">
+                    		<a th:href="@{download(bf_sysname=${fitem.bf_sysname},
+                    							   bf_oriname=${fitem.bf_oriname})}">
                     			<span class="file-title"
                     				th:text="${fitem.bf_oriname}"></span>
                     		</a>
@@ -118,7 +119,7 @@
                 <th:block th:each="ritem:${rList}">
                 	<div class="t_content p-20 re" th:text="${ritem.r_id}"></div>
                 	<div class="t_content p-50 re" th:text="${ritem.r_contents}"></div>
-                	<div class="t_content p-30 re" th:text="${ritem.r_date}"></div>
+                	<div class="t_content p-30 re" th:text="${#dates.format(ritem.r_date, 'yyyy-MM-dd HH:mm:ss')}"></div>
                 </th:block>
             </div>
         </div>
@@ -129,17 +130,18 @@
 </footer>
 </body>
 <script th:inline="javascript">
+	//댓글 저장 처리
 	$("#rbtn").click(function(){
-		const rForm = $("#rform").serialize(); // json 객체가 아님!
+		const rForm = $("#rform").serialize();//json 객체가 아님!
 		console.log(rForm);
 		
-		// restController로 전송
+		//restController로 전송
 		$.ajax({
 			url: "replyInsert",
 			type: "post",
 			data: rForm,
 			success: function(res){
-				console.log(res)
+				console.log(res);
 				if(res != null){
 					let str = "";
 					str += `
@@ -149,17 +151,73 @@
 					`;
 					$("#rSpace").prepend(str);
 					$("#comment").val("");
-				}else{
+				} else {
 					alert("댓글 저장 실패");
 					$("#comment").focus();
 				}
 			},
 			error: function(err){
 				console.log(err);
-				alert("댓글 작성 실패");
+				alert("댓글 저장 실패");
 				$("#comment").focus();
 			}
 		});
 	});
+	
+	$("#backbtn").click(function(){
+    	let url = "/boardList?";
+    	let colname = "";
+    	let keyword = "";
+    	let pageNum = "";
+    	
+    	const searchDto = [[${session.sdto}]];
+    	if(searchDto != null){//검색 기능을 수행한 경우
+    		colname = searchDto.colname;
+    		keyword = searchDto.keyword;
+    	}
+    	
+    	pageNum = [[${session.pageNum}]];
+    	
+    	if(colname == null || colname == ""){
+    		//검색 안한 이전 목록으로 이동
+    		url += `pageNum=${pageNum}`;
+    	} else {
+    		//검색을 한 이전 목록으로 이동
+    		url += `colname=${colname}&keyword=${keyword}&pageNum=${pageNum}`;
+    	}
+    	
+    	location.href = url;
+    });
+	
+	//글수정 및 삭제 버튼 처리(작성자만 수정 또는 삭제가 가능하도록 처리)
+	//수정/삭제 버튼 숨기기
+	$("#upbtn").hide();
+	$("#delbtn").hide();
+	let mid = [[${session.member.m_id}]];//로그인한 id
+	let bid = [[${board.b_id}]];//작성자 id
+	if(mid == bid){
+		$("#upbtn").show();
+		$("#delbtn").show();
+	}
+	
+	$("#upbtn").click(function(){
+		let bnum = [[${board.b_num}]];
+		location.href = `/updateForm?b_num=${bnum}`;
+	});
+	
+	$("#delbtn").click(function(){
+		let con = confirm("게시글을 삭제합니다.");
+		if(con == true){
+			let bnum = [[${board.b_num}]];
+			location.href = `/boardDelete?b_num=${bnum}`;
+		}
+	});
 </script>
 </html>
+
+
+
+
+
+
+

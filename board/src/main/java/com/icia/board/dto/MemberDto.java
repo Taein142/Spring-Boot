@@ -1,8 +1,10 @@
 package com.icia.board.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class MemberDto {
 	private String m_id;
 	private String m_pwd;
@@ -12,5 +14,9 @@ public class MemberDto {
 	private String m_addr;
 	private String m_phone;
 	private int m_point;
-	private String g_name;
+	private String g_name;//등급명 저장 변수(minfo 뷰용 변수)
 }
+
+
+
+

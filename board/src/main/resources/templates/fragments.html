@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
 <body>
 <!-- header -->
 <div th:fragment="header(member)" class="top-bar">
 	<div class="content">
-		<img src="images/r-logo.jpg" alt="로고" class="top-left logo" onclick="gohome()">
+		<img src="images/r-logo.jpg" alt="로고"
+			class="top-left logo" onclick="gohome()">
 		<h2 class="top-left top-home">Data-SCI Board</h2>
 		<nav class="top-right">
 			<ul>
@@ -23,14 +23,13 @@
 	<script th:inline="javascript">
 		const mem = [[${session.member}]];
 		
-		const gohome = () => {
-			if(mem != null){
-				location.href ="/boardList?pageNum=1"
-			}else{
-				location.href ="/";
+		function gohome(){
+			if(mem != null){ //로그인을 한 경우
+				location.href = "/boardList?pageNum=1";
+			} else {		 //로그인 안한 경우
+				location.href = "/";
 			}
 		}
-	
 	</script>
 </div>
 <!-- footer -->
@@ -42,6 +41,11 @@
 		</div>
 	</div>
 </div>
-
 </body>
 </html>
+
+
+
+
+
+

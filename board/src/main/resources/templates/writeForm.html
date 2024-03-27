@@ -77,6 +77,36 @@
             fileName = "파일선택";
         }
         $(".upload-name").val(fileName);
-    });    
+    }); 
+    
+    $("#backbtn").click(function(){
+    	let url = "/boardList?";
+    	let colname = "";
+    	let keyword = "";
+    	let pageNum = "";
+    	
+    	const searchDto = [[${session.sdto}]];
+    	if(searchDto != null){//검색 기능을 수행한 경우
+    		colname = searchDto.colname;
+    		keyword = searchDto.keyword;
+    	}
+    	
+    	pageNum = [[${session.pageNum}]];
+    	
+    	if(colname == null || colname == ""){
+    		//검색 안한 이전 목록으로 이동
+    		url += `pageNum=${pageNum}`;
+    	} else {
+    		//검색을 한 이전 목록으로 이동
+    		url += `colname=${colname}&keyword=${keyword}&pageNum=${pageNum}`;
+    	}
+    	
+    	location.href = url;
+    });
 </script>
 </html>
+
+
+
+
+

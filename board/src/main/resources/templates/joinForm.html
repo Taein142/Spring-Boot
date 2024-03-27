@@ -12,7 +12,7 @@
             if(m != null){
                 alert(m);
             }
-        })
+        });
     </script>
 </head>
 <body>
@@ -58,64 +58,72 @@
 </footer>
 </body>
 <script th:inline="javascript">
-    // id 중복체크
+    //id 중복 체크
     let ck = false;
     
     function idcheck(){
     	let id = $("#mid").val();
-    	if(id==""){
-    		alert("아이디를 입력하시오.");
+    	if(id == ""){
+    		alert("아이디를 입력하세요.");
     		$("#mid").focus();
-    		return;
+    		return;//여기서 함수 종료.
     	}
     	
-    	// 전송데이터 형식에 맞게 object형태로 작성
-    	let sendObj = {"mid": id}; // "test01" -> {"mid": "test01"}
+    	//전송 데이터 형식에 맞게 object로 작성
+    	let sendObj = {"mid": id};//"test01" -> {"mid":"test01"}
     	
-    	// ajax로 전송 및 결과 받아서 처리
+    	//ajax로 전송 및 결과 받아서 처리
     	$.ajax({
     		url: "idCheck",
     		type: "get",
     		data: sendObj,
     		success: (res) => {
-    			console.log(res);
+    			//console.log(res);
     			if(res == "ok"){
-    				alert("사용 가능한 아이디 입니다.");
+    				alert("사용 가능한 아이디입니다.");
     				ck = true;
-    			}else{
+    			} else {
     				alert("중복된 아이디입니다.");
     				ck = false;
-    				$("#mid").val(""); // 아이디 지우기
-    				$("#mid").focus;
+    				$("#mid").val("");//아이디 지우기
+    				$("#mid").focus();
     			}
     		},
     		error: (err) => {
-    			console.log(error);
+    			console.log(err);
     			ck = false;
     		}
     	});
     }
     
-    const check = () => {
-    	// id 중복체크 여부 확인
-    	if (ck == null){
+    function check(){
+    	//id 중복체크 여부 확인
+    	if(ck == false){
     		alert("아이디 중복 확인을 해주세요.");
     		return false;
     	}
     	
-    	// form 태그의 내용 가져오기
+    	//form 태그의 내용 가져오기
     	const jfrm = document.jForm;
-    	console.log(jForm);
+    	console.log(jfrm);
+    	
     	let length = jfrm.length - 1;
     	
-    	for (let i = 0; i < length; i++){
+    	for(let i = 0; i < length; i++){
     		if(jfrm[i].value == "" || jfrm[i] == null){
     			alert(`${jfrm[i].title} 입력!`);
     			jfrm[i].focus();
     			return false;
     		}
     	}
+    	
     	return true;
     }
 </script>
 </html>
+
+
+
+
+
+

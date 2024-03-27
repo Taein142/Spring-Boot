@@ -5,54 +5,88 @@
 	<select id="selectBoardList" parameterType="SearchDto"
 		resultType="BoardDto">
 		SELECT * FROM blist
-		<if test="colname != null and colname !=''">
-			WHERE ${colname} LIKE CONCAT('%',#{keyword},'%')
+		<if test="colname != null and colname != ''">
+		WHERE ${colname} LIKE CONCAT('%',#{keyword},'%')
 		</if>
 		LIMIT #{pageNum}, #{listCnt}
 	</select>
+	
 	<select id="selectBoardCnt" parameterType="SearchDto"
 		resultType="Integer">
 		SELECT count(*) FROM blist
-		<if test="colname != null and colname !=''">
-			WHERE ${colname} LIKE CONCAT('%',#{keyword},'%')
+		<if test="colname != null and colname != ''">
+		WHERE ${colname} LIKE CONCAT('%',#{keyword},'%')
 		</if>
 	</select>
+	
 	<insert id="insertBoard" parameterType="BoardDto"
 		useGeneratedKeys="true" keyProperty="b_num">
-		<selectKey keyProperty="b_num" resultType="Integer"
-			order="AFTER">
+		<selectKey keyProperty="b_num" resultType="Integer" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		INSERT INTO board Values(null, #{b_title}, #{b_contents}, #{b_id},
-		default, default)
+		INSERT INTO board
+		VALUES(NULL,#{b_title},#{b_contents},#{b_id},DEFAULT,DEFAULT)
 	</insert>
+	
 	<insert id="insertFile" parameterType="BoardFileDto">
 		INSERT INTO boardfile
-		VALUES
-		(null, #{bf_bnum}, #{bf_oriname}, #{bf_sysname})
+		VALUES(NULL,#{bf_bnum},#{bf_oriname},#{bf_sysname})
 	</insert>
+	
 	<select id="selectBoard" parameterType="Integer" resultType="BoardDto">
-		SELECT * FROM blist WHERE b_num = #{b_num}
+		SELECT * FROM blist WHERE b_num=#{b_num}
 	</select>
-	<select id="selectFileList" parameterType="Integer" resultType="BoardFileDto">
-		SELECT * FROM boardfile WHERE bf_bnum = #{b_num}
+	
+	<select id="selectFileList" parameterType="Integer" 
+		resultType="BoardFileDto">
+		SELECT * FROM boardfile WHERE bf_bnum=#{b_num}
 	</select>
-	<select id="selectReplList" parameterType="Integer" resultType="ReplyDto">
-		SELECT * FROM rlist WHERE r_bnum =#{b_num}
+	
+	<select id="selectReplyList" parameterType="Integer"
+		resultType="ReplyDto">
+		SELECT * FROM rlist WHERE r_bnum=#{b_num}
 	</select>
+	
 	<insert id="insertReply" parameterType="ReplyDto"
 		useGeneratedKeys="true" keyProperty="r_num">
 		<selectKey keyProperty="r_num" resultType="Integer" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		INSERT INTO reply VALUES
-		(null, #{r_bnum}, #{r_contents}, #{r_id}, default)
+		INSERT INTO reply
+		VALUES(NULL,#{r_bnum},#{r_contents},#{r_id},DEFAULT)
 	</insert>
+	
 	<select id="selectReply" parameterType="Integer" resultType="ReplyDto">
 		SELECT * FROM rlist WHERE r_num=#{r_num}
 	</select>
-	<update id="updateViews" parameterType="BoardDto">
-		UPDATE board SET b_views=#{b_views}
+	
+	<delete id="deleteFile" parameterType="String">
+		DELETE FROM boardfile WHERE bf_sysname=#{bf_sysname}
+	</delete>
+	
+	<update id="updateBoard" parameterType="BoardDto">
+		UPDATE board
+		SET b_title=#{b_title},b_contents=#{b_contents}
 		WHERE b_num=#{b_num}
 	</update>
+	
+	<update id="updateViews" parameterType="BoardDto">
+		UPDATE board SET b_views=#{b_views} WHERE b_num=#{b_num}
+	</update>
+	
+	<select id="selectFnameList" parameterType="Integer" resultType="String">
+		SELECT bf_sysname FROM boardFile WHERE bf_bnum=#{b_num}
+	</select>
+	
+	<delete id="deleteFiles" parameterType="Integer">
+		DELETE FROM boardfile WHERE bf_bnum=#{b_num}
+	</delete>
+		
+	<delete id="deleteReplies" parameterType="Integer">
+		DELETE FROM reply WHERE r_bnum=#{b_num}
+	</delete>
+	
+	<delete id="deleteBoard" parameterType="Integer">
+		DELETE FROM board WHERE b_num=#{b_num}
+	</delete>
 </mapper>

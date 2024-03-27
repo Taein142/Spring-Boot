@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DATA-SCI board</title>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script th:inline="javascript">
+        $(function () {
+            let m = [[${msg}]];
+            if(m != null){
+                alert(m);
+            }
+        })
+    </script>
+</head>
+<body>
+<header>
+    <th:block th:insert="~{fragments::header(${session.member})}" />
+</header>
+<section>
+    <div class="content">
+        <form th:action="@{updateProc}" class="write-form"
+              method="post" enctype="multipart/form-data">
+            <div class="user-info">
+                <div class="user-info-sub"
+                     th:object="${session.member}">
+                    <p th:text="'등급 ['+*{g_name}+']'"></p>
+                    <p th:text="'POINT ['+*{m_point}+']'"></p>
+                </div>
+            </div>
+            <h2 class="login-header">글 수정</h2>
+            <input type="hidden" name="b_id" th:value="${board.b_id}">
+            <input type="hidden" name="b_num" th:value="${board.b_num}">
+            <input type="text" class="write-input" name="b_title"
+                   autofocus placeholder="제목" required
+                   th:value="${board.b_title}">
+            <textarea rows="15" name="b_contents" class="write-input ta"
+                      th:text="${board.b_contents}"></textarea>
+            <div class="filebox">
+                <!-- 첨부된 파일 목록 출력 -->
+                <div id="bfile" style="margin-bottom: 10px">
+                    <th:block th:if="${#lists.isEmpty(fList)}">
+                    	<label style="width: 100%">첨부파일 없음</label>
+                    </th:block>
+                    <th:block th:unless="${#lists.isEmpty(fList)}">
+                    	<th:block th:each="fitem:${fList}">
+                    		<label style="width: 100%"
+                    			th:text="${fitem.bf_oriname}"
+                    			th:sysname="${fitem.bf_sysname}"
+                    			th:onclick="del(this.getAttribute('sysname'))"></label>
+                    	</th:block>
+                    </th:block>
+                </div>
+                <!-- 새로운 파일 첨부 -->
+                <label for="file">파일추가</label>
+                <input type="file" id="file" name="files" multiple>
+                <input type="text" class="upload-name"
+                       value="파일선택" readonly>
+            </div>
+            <div class="btn-area">
+                <input type="submit" class="btn-write" value="U">
+                <input type="reset" class="btn-write" value="R">
+                <input type="button" class="btn-write" value="B"
+                       id="backbtn">
+            </div>
+        </form>
+    </div>
+</section>
+<footer>
+    <th:block th:insert="~{fragments::footer}" />
+</footer>
+</body>
+<script th:inline="javascript">
+    $("#backbtn").click(function () {
+        let bnum = [[${board.b_num}]];
+        location.href = `/boardDetail?b_num=${bnum}`;
+    });
+
+    //파일 제목 처리
+    $("#file").on("change", function () {
+        let files = $("#file")[0].files;
+        console.log(files);
+
+        let fileName = "";//출력할 문장 저장 변수
+
+        if(files.length > 1){
+            fileName = `${files[0].name} 외 ${files.length - 1}개`;
+        } else if(files.length == 1){
+            fileName = files[0].name;
+        } else {
+            fileName = "파일선택";
+        }
+        $(".upload-name").val(fileName);
+    });
+
+    function del(sysname){
+    	console.log(sysname);
+    	let cfm = confirm("해당 파일을 삭제할까요?");
+    	if(cfm == false){
+    		return;
+    	}
+    	
+    	let sendObj = {"bf_sysname" : sysname};
+    	sendObj.bf_bnum = [[${board.b_num}]];
+    	console.log(sendObj);
+    	
+    	$.ajax({
+    		url: "delFile",
+    		type: "post",
+    		data: sendObj,
+    		success: function(res){
+    			console.log(res.length);
+    			//res.length == 0(모든파일 삭제), res.length > 0
+    			let flist = "";
+    			if(res != null){
+    				if(res.length == 0){
+    					flist += "<label style='width: 100%'>첨부파일 없음</label>";
+    				} else {
+    					for(let f of res){
+    						flist += `<label style="width: 100%"
+    										 onclick="del('${f.bf_sysname}')">
+    										${f.bf_oriname}
+    								  </label>`;
+    					}
+    				}
+    				
+    				$("#bfile").html(flist);
+    			} else {
+    				alert("파일 삭제 실패");
+    			}
+    		},
+    		error: function(err){
+    			console.log(err);
+    			alert("파일 삭제 실패");
+    		}
+    	});
+    }
+</script>
+</html>
+
+
+
+
